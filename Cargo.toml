@@ -1,0 +1,9 @@
+
+[workspace]
+members = [
+	'apps/rust/actix_api',
+	'apps/rust/test_app',
+]
+
+[profile.release]
+lto = true
