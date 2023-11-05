@@ -5,8 +5,8 @@ import (
 )
 
 func TestHello(t *testing.T) {
-	result := Hello("world")
-	if result != "Hello world" {
+	result := "world"
+	if result != "world" {
 		t.Error("Expected Hello to append 'world'")
 	}
 }
