@@ -5,6 +5,7 @@ members = [
 	'apps/rust/test_app',
 	'apps/rust/axum_api',
 ]
+resolver = '2'
 
 [profile.release]
 lto = true
