@@ -1,0 +1,91 @@
+# https://taskfile.dev
+
+version: '3'
+
+includes:
+  cluster: ./platform/cluster
+  crossplane: ./platform/crossplane
+  kubevela: ./platform/kubevela
+  gcloud: ./platform/gcloud
+  argocd: ./platform/gitops/argocd
+  fluxcd: ./platform/gitops/fluxcd
+  scripts: ./scripts
+
+vars:
+  GREETING: Hello, World!
+
+tasks:
+  default:
+    cmds:
+      - echo "{{.GREETING}}"
+    silent: true
+  wrk:
+    cmds:
+      - wrk -t8 -c256 -d30s http://127.0.0.1:5201/api/users
+      - wrk -t8 -c256 -d30s http://127.0.0.1:5301/api/users
+
+  tilt:up:
+    cmds:
+      - tilt up
+  tilt:down:
+    cmds:
+      - tilt down
+
+  protoc:
+    cmds:
+#      - --rust_out ./libs/rust/grpc/src/generated
+      - protoc --go_out ./libs/go/ --plugin=node_modules/ts-proto/protoc-gen-ts_proto --ts_proto_opt=nestJs=true,addGrpcMetadata=true,addNestjsRestParameter=true --ts_proto_out=./libs/node/grpc/src ./_proto/*.proto --ts_proto_opt=esModuleInterop=true
+  image-pull-secret:
+    cmds:
+      - kubectl create secret docker-registry my-registry-secret --docker-server=europe-central2-docker.pkg.dev --docker-username=_json_key --docker-password="$(cat mussia-infra-a6504e8e275d.json)" --docker-email=container-puller-sa@mussia-infra.iam.gserviceaccount.com
+  start:
+    deps:
+      - cluster:kind-local-cluster:up
+    cmds:
+#     - up uxp install
+#     - kubectl auth can-i create namespaces --as=system:serviceaccount:crossplane-system:provider-helm-503c3591121b
+     - task: crossplane:setup
+
+#     - cargo run -p rust_master_operator
+#      - up ctp attach remote-virtual -a hashheddan | KUBECONFIG=kubeconfig.yaml up uxp connect -
+#     - helm install external-secrets external-secrets/external-secrets -n external-secrets --create-namespace --set installCRDs=true
+#     - helm install kube-prometheus bitnami/kube-prometheus -n prometheus --create-namespace --set installCRDs=true
+#     - kind create cluster --config=platform/cluster/cluster.yaml # cluster with ingress
+#     - helm install my-cadvisor ckotzbauer/cadvisor
+#     - helm install prometheus-release prometheus-community/kube-prometheus-stack -n monitoring
+#     - kubectl get secret my-release-grafana-admin --namespace default -o jsonpath="{.data.GF_SECURITY_ADMIN_PASSWORD}" | base64 -d
+#     - task: kubevela:install
+#     - task: argocd:install
+#     - task: argocd:apply
+#     - task: argocd:get-secret
+#     - helm install kubeshark kubeshark/kubeshark
+#     - task: kubevela:install
+#     - sleep 60
+#     - kubectl -n crossplane-system wait deployment crossplane --for=condition=Available --timeout=180s
+#     - kubectl get pods -n crossplane-system
+#     - kubectl get deployments -n crossplane-system
+#     - kubectl get crd --output json | cdk8s import /dev/stdin --language typescript
+#     - task: kubevela:apply
+#     - kubectl port-forward -n kubeshark service/kubeshark-hub 8898:80
+#     - kubectl port-forward -n kubeshark service/kubeshark-front 8899:80
+#     - kubectl schemahero install
+#     - argocd app sync previews
+     - task: tilt:up
+
+#      - kubectl apply --filename https://storage.googleapis.com/tekton-releases/pipeline/previous/v0.44.0/release.yaml
+#      - kubectl apply --filename https://github.com/shipwright-io/build/releases/download/v0.11.0/release.yaml
+#      - kubectl apply --filename https://github.com/shipwright-io/build/releases/download/v0.11.0/sample-strategies.yaml
+#      - kubectl wait --for condition=Available=True --timeout=300s deployment/argocd-server --namespace argocd
+#      - helm install kube-prometheus bitnami/kube-prometheus -n prometheus --create-namespace --set installCRDs=true
+#      - kubectl wait --for condition=Available=True --timeout=300s deployment/argocd-server --namespace argocd
+#      - kubectl wait --for condition=Available=True --timeout=300s deployment/argocd-server --namespace argocd
+#      - helm repo add kubevela https://charts.kubevela.net/core
+#      - helm repo update
+#      - helm install --create-namespace -n vela-system kubevela kubevela/vela-core --wait
+
+  stop:
+    deps:
+      - task: tilt:down
+    cmds:
+      - task: cluster:delete
+#      - task: cluster:kind-local-cluster:down
