@@ -66,6 +66,41 @@
       "options": {
         "lintFilePatterns": ["apps/frontend/react-app/**/*.{ts,tsx,js,jsx}"]
       }
+    },
+    "container": {
+      "executor": "@nx-tools/nx-container:build",
+      "dependsOn": [
+        {
+          "target": "build",
+          "params": "forward"
+        }
+      ],
+      "options": {
+        "push": true,
+        "file": "./Dockerfile",
+        "target": "nginx",
+        "platforms": [
+          "linux/amd64"
+        ],
+        "build-args": [
+          "DIST_PATH=dist/apps/frontend/react-app"
+        ],
+        "metadata": {
+          "images": [
+            "yurikrupnik/react-app"
+          ],
+          "tags": [
+            "type=schedule",
+            "type=ref,event=branch",
+            "type=ref,event=tag",
+            "type=ref,event=pr",
+            "type=semver,pattern={{version}}",
+            "type=semver,pattern={{major}}.{{minor}}",
+            "type=semver,pattern={{major}}",
+            "type=sha"
+          ]
+        }
+      }
     }
   },
   "tags": []

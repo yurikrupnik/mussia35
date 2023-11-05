@@ -21,8 +21,8 @@ jobs:
           go-version: 'stable'
           check-latest: true
           cache: true
-      - run: rustup toolchain install stable --profile minimal
-      - run: rustup show
+#      - run: rustup toolchain install stable --profile minimal
+#      - run: rustup show
       - uses: Swatinem/rust-cache@v2
         with:
           cache-directories: "dist/target"
@@ -66,8 +66,8 @@ jobs:
           go-version: 'stable'
           check-latest: true
           cache: true
-      - run: rustup toolchain install stable --profile minimal
-      - run: rustup show
+#      - run: rustup toolchain install stable --profile minimal
+#      - run: rustup show
       - uses: Swatinem/rust-cache@v2
         with:
           cache-directories: "dist/target"
@@ -112,7 +112,7 @@ jobs:
           go-version: 'stable'
           check-latest: true
           cache: true
-      - run: rustup toolchain install stable --profile minimal
+#      - run: rustup toolchain install stable --profile minimal
       - uses: Swatinem/rust-cache@v2
         with:
           cache-directories: "dist/target"
@@ -156,7 +156,7 @@ jobs:
           go-version: 'stable'
           check-latest: true
           cache: true
-      - run: rustup toolchain install stable --profile minimal
+#      - run: rustup toolchain install stable --profile minimal
       - uses: Swatinem/rust-cache@v2
         with:
           cache-directories: "dist/target"

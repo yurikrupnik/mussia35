@@ -67,6 +67,41 @@
         "passWithNoTests": true,
         "reportsDirectory": "../../../coverage/apps/frontend/solid-app"
       }
+    },
+    "container": {
+      "executor": "@nx-tools/nx-container:build",
+      "dependsOn": [
+        {
+          "target": "build",
+          "params": "forward"
+        }
+      ],
+      "options": {
+        "push": true,
+        "file": "./Dockerfile",
+        "target": "nginx",
+        "platforms": [
+          "linux/amd64"
+        ],
+        "build-args": [
+          "DIST_PATH=dist/apps/frontend/solid-app"
+        ],
+        "metadata": {
+          "images": [
+            "yurikrupnik/solid-app"
+          ],
+          "tags": [
+            "type=schedule",
+            "type=ref,event=branch",
+            "type=ref,event=tag",
+            "type=ref,event=pr",
+            "type=semver,pattern={{version}}",
+            "type=semver,pattern={{major}}.{{minor}}",
+            "type=semver,pattern={{major}}",
+            "type=sha"
+          ]
+        }
+      }
     }
   }
 }

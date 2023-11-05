@@ -25,6 +25,8 @@
     "@nestjs/testing": "^10.0.2",
     "@nx-extend/pulumi": "^4.0.0",
     "@nx-go/nx-go": "^2.8.0",
+    "@nx-tools/container-metadata": "^5.1.0",
+    "@nx-tools/nx-container": "^5.1.0",
     "@nx/devkit": "17.0.3",
     "@nx/eslint": "17.0.3",
     "@nx/eslint-plugin": "17.0.3",
