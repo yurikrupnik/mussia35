@@ -12,6 +12,8 @@
     "tslib": "^2.3.0"
   },
   "devDependencies": {
+    "@monodon/rust": "^1.2.0",
+    "@nx-go/nx-go": "^2.8.0",
     "@nx/devkit": "17.0.3",
     "@nx/eslint": "17.0.3",
     "@nx/eslint-plugin": "17.0.3",

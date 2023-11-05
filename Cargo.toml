@@ -1,0 +1,10 @@
+
+[workspace]
+members = [
+	'apps/rust/actix_api',
+	'apps/rust/test_app',
+	'apps/rust/axum_api',
+]
+
+[profile.release]
+lto = true
