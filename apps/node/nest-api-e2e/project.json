@@ -4,7 +4,7 @@
   "implicitDependencies": ["apps/node/nest-api"],
   "projectType": "application",
   "targets": {
-    "e2e": {
+    "e2e-local": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{e2eProjectRoot}"],
       "options": {
